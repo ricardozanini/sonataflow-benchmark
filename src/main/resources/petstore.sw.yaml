@@ -1,0 +1,22 @@
+id: pet_store
+version: '1.0'
+specVersion: '0.8'
+name: Pet Store Pet Fetch
+description: Small Example Test OpenAPI Remote Executions
+start: getPet
+dataInputSchema: input.json
+functions:
+  - name: funcGetPet
+    operation: specs/petstore.openapi.json#getPetById
+states:
+  - name: getPet
+    type: operation
+    actions:
+      - functionRef:
+          refName: funcGetPet
+          arguments:
+            petId: .id
+    stateDataFilter:
+      output: ${ "You found the dog "+ .name }
+    end:
+      terminate: true

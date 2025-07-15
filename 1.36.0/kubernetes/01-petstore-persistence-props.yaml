@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: petstore
+  name: petstore-props
+data:
+  application.properties: |   
+    kie.flyway.enabled=true

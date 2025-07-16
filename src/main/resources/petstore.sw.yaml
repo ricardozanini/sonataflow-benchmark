@@ -1,4 +1,4 @@
-id: pet_store
+id: petstore
 version: '1.0'
 specVersion: '0.8'
 name: Pet Store Pet Fetch

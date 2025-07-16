@@ -1,0 +1,35 @@
+apiVersion: sonataflow.org/v1alpha08
+kind: SonataFlow
+metadata:
+  name: petstore
+  annotations:
+    sonataflow.org/name: Pet Store Pet Fetch
+    sonataflow.org/description: Small Example Test OpenAPI Remote Executions
+    sonataflow.org/version: 0.0.1
+    sonataflow.org/profile: gitops
+spec:
+  podTemplate:
+    container:
+      image: quay.io/wmedvede/petstore:1.35.0
+  flow:
+    start: getPet
+    dataInputSchema:
+      failOnValidationErrors: true
+      schema: input.json
+    functions:
+      - name: funcGetPet
+        operation: specs/petstore.openapi.json#getPetById
+    states:
+      - name: getPet
+        type: operation
+        actions:
+          - functionRef:
+              refName: funcGetPet
+              arguments:
+                petId: .id
+        stateDataFilter:
+          output: ${ "You found the dog "+ .name }
+        end:
+          terminate: true
+
+
